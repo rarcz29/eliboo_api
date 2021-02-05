@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eliboo.Api", "Eliboo.Api\El
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eliboo.Data", "Eliboo.Data\Eliboo.Data.csproj", "{535A5090-F7BD-4AA1-80A5-8264F4CB11AF}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E65DAEF8-750D-459E-B036-0ADC6F519FA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{535A5090-F7BD-4AA1-80A5-8264F4CB11AF}.Release|x64.Build.0 = Release|Any CPU
 		{535A5090-F7BD-4AA1-80A5-8264F4CB11AF}.Release|x86.ActiveCfg = Release|Any CPU
 		{535A5090-F7BD-4AA1-80A5-8264F4CB11AF}.Release|x86.Build.0 = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|x64.Build.0 = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Debug|x86.Build.0 = Debug|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|x64.ActiveCfg = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|x64.Build.0 = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|x86.ActiveCfg = Release|Any CPU
+		{E65DAEF8-750D-459E-B036-0ADC6F519FA6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
