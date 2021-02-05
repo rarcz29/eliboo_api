@@ -8,5 +8,7 @@ namespace Eliboo.Data.DataAccess
         public LibraryContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Book> Books { get; set; }
+
+        public DbSet<Bookshelf> Bookshelves { get; set; }
     }
 }
