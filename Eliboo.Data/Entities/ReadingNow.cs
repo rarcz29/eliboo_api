@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-namespace Eliboo.Data.Models
+namespace Eliboo.Data.Entities
 {
+    [Keyless]
     public class ReadingNow
     {
         [Required]

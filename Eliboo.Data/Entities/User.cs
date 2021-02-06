@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Eliboo.Data.Models
+namespace Eliboo.Data.Entities
 {
     public class User
     {

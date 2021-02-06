@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Eliboo.Api
@@ -26,9 +27,13 @@ namespace Eliboo.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Eliboo.Api", Version = "v1" });
             });
-            services.AddDbContext<LibraryContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("Develop"));
+                options
+                    .UseNpgsql(Configuration.GetConnectionString("Develop"))
+                    .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                    .EnableSensitiveDataLogging()
+                    .UseSnakeCaseNamingConvention();
             });
         }
 

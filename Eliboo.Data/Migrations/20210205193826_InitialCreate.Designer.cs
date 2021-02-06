@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Eliboo.Data.Migrations
 {
-    [DbContext(typeof(LibraryContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20210205193826_InitialCreate")]
     partial class InitialCreate
     {
