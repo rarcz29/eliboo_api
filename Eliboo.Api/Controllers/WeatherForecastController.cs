@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Eliboo.Api.Controllers
 {
@@ -34,6 +33,12 @@ namespace Eliboo.Api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost]
+        public void Post(WeatherForecast weatherForecast)
+        {
+            _logger.LogInformation("asdfasdfasdfafdd");
         }
     }
 }

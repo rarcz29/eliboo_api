@@ -15,7 +15,7 @@ namespace Eliboo.Data.Repositories
             _db = db;
         }
 
-        public TEntity Get(Guid id)
+        public TEntity Get(int id)
         {
             return _db.Set<TEntity>().Find(id);
         }

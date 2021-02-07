@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Eliboo.Data.Entities
 {
@@ -8,13 +9,15 @@ namespace Eliboo.Data.Entities
 
         [Required]
         [MaxLength(40)]
-        public string Author { get; set; }
+        public string Title { get; set; }
 
         [Required]
+        [MaxLength(40)]
+        public string Author { get; set; }
+
         [MaxLength(30)]
         public string Genre { get; set; }
 
-        [Required]
-        public Bookshelf Bookshelf { get; set; }
+        public IEnumerable<User> Users { get; set; }
     }
 }

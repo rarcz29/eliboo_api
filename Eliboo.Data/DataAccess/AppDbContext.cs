@@ -13,8 +13,15 @@ namespace Eliboo.Data.DataAccess
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<MyList> MyList { get; set; }
+        public DbSet<Library> Libraries { get; set; }
 
-        public DbSet<ReadingNow> ReadingNow { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Book>()
+                .HasMany(b => b.Users)
+                .WithMany(u => u.Books)
+                .UsingEntity(j => j.ToTable("my_list"));
+        }
     }
 }
