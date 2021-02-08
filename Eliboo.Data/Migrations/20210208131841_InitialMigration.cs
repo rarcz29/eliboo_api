@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Eliboo.Data.Migrations
@@ -8,16 +9,36 @@ namespace Eliboo.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "libraries",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    access_token = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_libraries", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "bookshelves",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    description = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    library_id = table.Column<int>(type: "integer", nullable: false),
+                    description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_bookshelves", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_bookshelves_libraries_library_id",
+                        column: x => x.library_id,
+                        principalTable: "libraries",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -26,13 +47,21 @@ namespace Eliboo.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    library_id = table.Column<int>(type: "integer", nullable: false),
                     nickname = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     email = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
-                    password = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
+                    password = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_users", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_users_libraries_library_id",
+                        column: x => x.library_id,
+                        principalTable: "libraries",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,9 +70,10 @@ namespace Eliboo.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    author = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    genre = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    bookshelf_id = table.Column<int>(type: "integer", nullable: true)
+                    bookshelf_id = table.Column<int>(type: "integer", nullable: false),
+                    title = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    author = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    genre = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,18 +83,19 @@ namespace Eliboo.Data.Migrations
                         column: x => x.bookshelf_id,
                         principalTable: "bookshelves",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "my_list",
                 columns: table => new
                 {
-                    users_id = table.Column<int>(type: "integer", nullable: false),
-                    books_id = table.Column<int>(type: "integer", nullable: false)
+                    books_id = table.Column<int>(type: "integer", nullable: false),
+                    users_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("pk_my_list", x => new { x.books_id, x.users_id });
                     table.ForeignKey(
                         name: "fk_my_list_books_books_id",
                         column: x => x.books_id,
@@ -79,38 +110,15 @@ namespace Eliboo.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "reading_now",
-                columns: table => new
-                {
-                    users_id = table.Column<int>(type: "integer", nullable: false),
-                    books_id = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "fk_reading_now_books_books_id",
-                        column: x => x.books_id,
-                        principalTable: "books",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_reading_now_users_users_id",
-                        column: x => x.users_id,
-                        principalTable: "users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "ix_books_bookshelf_id",
                 table: "books",
                 column: "bookshelf_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_my_list_books_id",
-                table: "my_list",
-                column: "books_id");
+                name: "ix_bookshelves_library_id",
+                table: "bookshelves",
+                column: "library_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_my_list_users_id",
@@ -118,23 +126,15 @@ namespace Eliboo.Data.Migrations
                 column: "users_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_reading_now_books_id",
-                table: "reading_now",
-                column: "books_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_reading_now_users_id",
-                table: "reading_now",
-                column: "users_id");
+                name: "ix_users_library_id",
+                table: "users",
+                column: "library_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "my_list");
-
-            migrationBuilder.DropTable(
-                name: "reading_now");
 
             migrationBuilder.DropTable(
                 name: "books");
@@ -144,6 +144,9 @@ namespace Eliboo.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "bookshelves");
+
+            migrationBuilder.DropTable(
+                name: "libraries");
         }
     }
 }

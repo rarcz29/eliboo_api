@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Eliboo.Data.Entities
 {
@@ -10,6 +11,8 @@ namespace Eliboo.Data.Entities
         [MaxLength(20)]
         public string AccessToken { get; set; }
 
-        public User Users { get; set; }
+        public IEnumerable<User> Users { get; set; }
+
+        public IEnumerable<Bookshelf> Bookshelves { get; set; }
     }
 }

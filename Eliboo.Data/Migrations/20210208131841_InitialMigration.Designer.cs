@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eliboo.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210206183859_InitialMigration")]
+    [Migration("20210208131841_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,25 @@ namespace Eliboo.Data.Migrations
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.2");
+
+            modelBuilder.Entity("BookUser", b =>
+                {
+                    b.Property<int>("BooksId")
+                        .HasColumnType("integer")
+                        .HasColumnName("books_id");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer")
+                        .HasColumnName("users_id");
+
+                    b.HasKey("BooksId", "UsersId")
+                        .HasName("pk_my_list");
+
+                    b.HasIndex("UsersId")
+                        .HasDatabaseName("ix_my_list_users_id");
+
+                    b.ToTable("my_list");
+                });
 
             modelBuilder.Entity("Eliboo.Data.Entities.Book", b =>
                 {
@@ -31,19 +50,24 @@ namespace Eliboo.Data.Migrations
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
                         .HasColumnName("author");
 
-                    b.Property<int?>("BookshelfId")
+                    b.Property<int>("BookshelfId")
                         .HasColumnType("integer")
                         .HasColumnName("bookshelf_id");
 
                     b.Property<string>("Genre")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("genre");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
-                        .HasColumnName("genre");
+                        .HasColumnName("title");
 
                     b.HasKey("Id")
                         .HasName("pk_books");
@@ -64,52 +88,41 @@ namespace Eliboo.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("description");
+
+                    b.Property<int>("LibraryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("library_id");
 
                     b.HasKey("Id")
                         .HasName("pk_bookshelves");
 
+                    b.HasIndex("LibraryId")
+                        .HasDatabaseName("ix_bookshelves_library_id");
+
                     b.ToTable("bookshelves");
                 });
 
-            modelBuilder.Entity("Eliboo.Data.Entities.MyList", b =>
+            modelBuilder.Entity("Eliboo.Data.Entities.Library", b =>
                 {
-                    b.Property<int>("BooksId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("books_id");
+                        .HasColumnName("id")
+                        .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer")
-                        .HasColumnName("users_id");
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("access_token");
 
-                    b.HasIndex("BooksId")
-                        .HasDatabaseName("ix_my_list_books_id");
+                    b.HasKey("Id")
+                        .HasName("pk_libraries");
 
-                    b.HasIndex("UsersId")
-                        .HasDatabaseName("ix_my_list_users_id");
-
-                    b.ToTable("my_list");
-                });
-
-            modelBuilder.Entity("Eliboo.Data.Entities.ReadingNow", b =>
-                {
-                    b.Property<int>("BooksId")
-                        .HasColumnType("integer")
-                        .HasColumnName("books_id");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer")
-                        .HasColumnName("users_id");
-
-                    b.HasIndex("BooksId")
-                        .HasDatabaseName("ix_reading_now_books_id");
-
-                    b.HasIndex("UsersId")
-                        .HasDatabaseName("ix_reading_now_users_id");
-
-                    b.ToTable("reading_now");
+                    b.ToTable("libraries");
                 });
 
             modelBuilder.Entity("Eliboo.Data.Entities.User", b =>
@@ -120,11 +133,19 @@ namespace Eliboo.Data.Migrations
                         .HasColumnName("id")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)")
                         .HasColumnName("email");
+
+                    b.Property<int>("LibraryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("library_id");
 
                     b.Property<string>("Nickname")
                         .IsRequired()
@@ -141,57 +162,73 @@ namespace Eliboo.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_users");
 
+                    b.HasIndex("LibraryId")
+                        .HasDatabaseName("ix_users_library_id");
+
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("Eliboo.Data.Entities.Book", b =>
+            modelBuilder.Entity("BookUser", b =>
                 {
-                    b.HasOne("Eliboo.Data.Entities.Bookshelf", "Bookshelf")
-                        .WithMany()
-                        .HasForeignKey("BookshelfId")
-                        .HasConstraintName("fk_books_bookshelves_bookshelf_id");
-
-                    b.Navigation("Bookshelf");
-                });
-
-            modelBuilder.Entity("Eliboo.Data.Entities.MyList", b =>
-                {
-                    b.HasOne("Eliboo.Data.Entities.Book", "Books")
+                    b.HasOne("Eliboo.Data.Entities.Book", null)
                         .WithMany()
                         .HasForeignKey("BooksId")
                         .HasConstraintName("fk_my_list_books_books_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eliboo.Data.Entities.User", "Users")
+                    b.HasOne("Eliboo.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .HasConstraintName("fk_my_list_users_users_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Books");
-
-                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Eliboo.Data.Entities.ReadingNow", b =>
+            modelBuilder.Entity("Eliboo.Data.Entities.Book", b =>
                 {
-                    b.HasOne("Eliboo.Data.Entities.Book", "Books")
-                        .WithMany()
-                        .HasForeignKey("BooksId")
-                        .HasConstraintName("fk_reading_now_books_books_id")
+                    b.HasOne("Eliboo.Data.Entities.Bookshelf", "Bookshelf")
+                        .WithMany("Books")
+                        .HasForeignKey("BookshelfId")
+                        .HasConstraintName("fk_books_bookshelves_bookshelf_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eliboo.Data.Entities.User", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .HasConstraintName("fk_reading_now_users_users_id")
+                    b.Navigation("Bookshelf");
+                });
+
+            modelBuilder.Entity("Eliboo.Data.Entities.Bookshelf", b =>
+                {
+                    b.HasOne("Eliboo.Data.Entities.Library", "Library")
+                        .WithMany("Bookshelves")
+                        .HasForeignKey("LibraryId")
+                        .HasConstraintName("fk_bookshelves_libraries_library_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Library");
+                });
+
+            modelBuilder.Entity("Eliboo.Data.Entities.User", b =>
+                {
+                    b.HasOne("Eliboo.Data.Entities.Library", "Library")
+                        .WithMany("Users")
+                        .HasForeignKey("LibraryId")
+                        .HasConstraintName("fk_users_libraries_library_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Library");
+                });
+
+            modelBuilder.Entity("Eliboo.Data.Entities.Bookshelf", b =>
+                {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Eliboo.Data.Entities.Library", b =>
+                {
+                    b.Navigation("Bookshelves");
 
                     b.Navigation("Users");
                 });

@@ -8,15 +8,20 @@ namespace Eliboo.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        public int BookshelfId { get; set; }
+
+        [Required]
+        [MaxLength(30)]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [MaxLength(30)]
         public string Author { get; set; }
 
-        [MaxLength(30)]
+        [MaxLength(40)]
         public string Genre { get; set; }
+
+        public Bookshelf Bookshelf { get; set; }
 
         public IEnumerable<User> Users { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Eliboo.Data.Entities
@@ -6,6 +7,9 @@ namespace Eliboo.Data.Entities
     public class User
     {
         public int Id { get; set; }
+
+        [Required]
+        public int LibraryId { get; set; }
 
         [Required]
         [MaxLength(30)]
@@ -20,8 +24,9 @@ namespace Eliboo.Data.Entities
         public string Password { get; set; }
 
         [Required]
-        public int LibrariesId { get; set; }
-        public Library Libraries { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public Library Library { get; set; }
 
         public IEnumerable<Book> Books { get; set; }
     }
