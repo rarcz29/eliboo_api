@@ -1,4 +1,5 @@
 ﻿using Eliboo.Data.Entities;
+using Eliboo.Data.GenericRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eliboo.Data.Repositories

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Eliboo.Data.Repositories
+namespace Eliboo.Data.GenericRepository
 {
     public interface IRepository<TEntity> where TEntity : class
     {

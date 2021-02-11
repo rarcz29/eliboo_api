@@ -1,7 +1,8 @@
-﻿using Eliboo.Data.Repositories;
+﻿using Eliboo.Data.DataAccess;
+using Eliboo.Data.Repositories;
 using System.Threading.Tasks;
 
-namespace Eliboo.Data.DataAccess
+namespace Eliboo.Data.DataProvider
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -10,8 +11,11 @@ namespace Eliboo.Data.DataAccess
         public UnitOfWork(AppDbContext db)
         {
             _db = db;
+            Users = new UserRepository(db);
             Books = new BookRepository(db);
         }
+
+        public IUserRepository Users { get; private set; }
 
         public IBookRepository Books { get; private set; }
 
@@ -23,11 +27,6 @@ namespace Eliboo.Data.DataAccess
         public async Task<int> CommitAsync()
         {
             return await _db.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            _db.Dispose();
         }
     }
 }

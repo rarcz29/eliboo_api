@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Eliboo.Data.Repositories
+namespace Eliboo.Data.GenericRepository
 {
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

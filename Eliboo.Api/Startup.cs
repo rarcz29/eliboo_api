@@ -1,5 +1,6 @@
 using Eliboo.Api.Services;
 using Eliboo.Data.DataAccess;
+using Eliboo.Data.DataProvider;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,7 +62,9 @@ namespace Eliboo.Api
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(
+                            Configuration.GetValue<string>("JwtSettings:Secret"))),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
