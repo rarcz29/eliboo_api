@@ -1,6 +1,6 @@
-﻿namespace Eliboo.Api.Models
+﻿namespace Eliboo.Api.Contracts.Requests
 {
-    public class Registration
+    public class UserAuthenticationRequest
     {
         public string Email { get; set; }
 
