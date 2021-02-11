@@ -79,6 +79,7 @@ namespace Eliboo.Api
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IIdentityManager, IdentityManager>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

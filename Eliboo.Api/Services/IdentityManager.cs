@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Eliboo.Data.DataProvider;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,15 +11,21 @@ namespace Eliboo.Api.Services
     public class IdentityManager : IIdentityManager
     {
         private readonly string _key;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public IdentityManager(string key)
+        public IdentityManager(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
-            _key = key;
+            _key = configuration.GetValue<string>("JwtSettings:Secret");
+            _unitOfWork = unitOfWork;
         }
 
+        // TODO: database connection
+        // TODO: password hashing
         public string Authenticate(string email, string password)
         {
-            if (email == "tmp" && password == "tmp")
+            var user = _unitOfWork.Users.GetUserByEmail(email);
+
+            if (email == user.Email && password == user.Password)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenKey = Encoding.ASCII.GetBytes(_key);
@@ -25,7 +33,8 @@ namespace Eliboo.Api.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Email, "tmp")
+                        new Claim(ClaimTypes.Name, user.Nickname),
+                        new Claim(ClaimTypes.Email, user.Email)
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
                     SigningCredentials = new SigningCredentials(

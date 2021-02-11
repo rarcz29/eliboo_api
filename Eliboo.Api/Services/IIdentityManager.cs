@@ -1,6 +1,6 @@
 ﻿namespace Eliboo.Api.Services
 {
-    interface IIdentityManager
+    public interface IIdentityManager
     {
         string Authenticate(string email, string password);
 

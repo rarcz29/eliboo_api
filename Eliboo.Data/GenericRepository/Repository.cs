@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 
 namespace Eliboo.Data.GenericRepository
 {
+    // TODO: Make calls async
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly DbContext _db;
