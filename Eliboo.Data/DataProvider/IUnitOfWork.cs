@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Eliboo.Data.DataProvider
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get; }
 

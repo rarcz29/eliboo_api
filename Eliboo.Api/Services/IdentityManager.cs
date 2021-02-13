@@ -1,10 +1,12 @@
 ﻿using Eliboo.Data.DataProvider;
+using Eliboo.Data.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Eliboo.Api.Services
 {
@@ -50,7 +52,17 @@ namespace Eliboo.Api.Services
 
         public void Register(string username, string email, string password)
         {
-            throw new System.NotImplementedException();
+            // TODO: library id
+            var user = new User
+            {
+                LibraryId = 1,
+                Nickname = username,
+                Email = email,
+                Password = password,
+                CreatedAt = DateTime.Now
+            };
+            _unitOfWork.Users.Add(user);
+            _unitOfWork.Commit();
         }
     }
 }

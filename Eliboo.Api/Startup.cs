@@ -78,7 +78,7 @@ namespace Eliboo.Api
                     .UseSnakeCaseNamingConvention();
             });
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IIdentityManager, IdentityManager>();
         }
 

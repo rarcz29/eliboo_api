@@ -1,4 +1,6 @@
-﻿namespace Eliboo.Api.Services
+﻿using System.Threading.Tasks;
+
+namespace Eliboo.Api.Services
 {
     public interface IIdentityManager
     {

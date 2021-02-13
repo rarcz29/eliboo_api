@@ -28,5 +28,10 @@ namespace Eliboo.Data.DataProvider
         {
             return await _db.SaveChangesAsync();
         }
+
+        public void Dispose()
+        {
+            _db.Dispose();
+        }
     }
 }

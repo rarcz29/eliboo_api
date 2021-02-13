@@ -1,12 +1,10 @@
 ﻿using Eliboo.Api.Contracts.Requests;
 using Eliboo.Api.Contracts.Responses;
 using Eliboo.Api.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eliboo.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/auth")]
     public class IdentityController : ControllerBase
@@ -18,7 +16,14 @@ namespace Eliboo.Api.Controllers
             _identityManager = identityManager;
         }
 
-        [AllowAnonymous]
+        // TODO: Return a different status if not registered
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] UserRegistrationRequest request)
+        {
+            _identityManager.Register(request.Username, request.Email, request.Password);
+            return Ok();
+        }
+
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserAuthenticationRequest request)
         {
