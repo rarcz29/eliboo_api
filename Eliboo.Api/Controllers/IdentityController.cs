@@ -16,6 +16,12 @@ namespace Eliboo.Api.Controllers
             _identityManager = identityManager;
         }
 
+        [HttpGet("test")]
+        public string Test()
+        {
+            return "Działa";
+        }
+
         // TODO: Return a different status if not registered
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserRegistrationRequest request)
@@ -29,7 +35,7 @@ namespace Eliboo.Api.Controllers
         {
             var token = _identityManager.Authenticate(request.Email, request.Password);
             var response = new AuthSuccessResponse { Token = token };
-            return token == null ? Ok(response) : Unauthorized();
+            return token != null ? Ok(response) : Unauthorized();
         }
     }
 }
