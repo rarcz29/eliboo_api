@@ -77,6 +77,16 @@ namespace Eliboo.Api
                     .EnableSensitiveDataLogging()
                     .UseSnakeCaseNamingConvention();
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IIdentityManager, IdentityManager>();
@@ -92,8 +102,9 @@ namespace Eliboo.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

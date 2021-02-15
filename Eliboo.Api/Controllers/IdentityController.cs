@@ -17,16 +17,16 @@ namespace Eliboo.Api.Controllers
         }
 
         [HttpGet("test")]
-        public string Test()
-        {
-            return "Działa";
-        }
+        public string Get() => "test";
 
         // TODO: Return a different status if not registered
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserRegistrationRequest request)
         {
-            _identityManager.Register(request.Username, request.Email, request.Password);
+            if (request.Password == request.Confirm)
+            {
+                _identityManager.Register(request.Username, request.Email, request.Password);
+            }
             return Ok();
         }
 
