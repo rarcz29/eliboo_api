@@ -27,7 +27,7 @@ namespace Eliboo.Api.Services
         {
             var user = _unitOfWork.Users.GetUserByEmail(email);
 
-            if (email == user.Email && password == user.Password)
+            if (user != null && email == user.Email && password == user.Password)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenKey = Encoding.ASCII.GetBytes(_key);
