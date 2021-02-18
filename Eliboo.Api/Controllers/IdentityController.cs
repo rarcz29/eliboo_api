@@ -16,9 +16,6 @@ namespace Eliboo.Api.Controllers
             _identityManager = identityManager;
         }
 
-        [HttpGet("test")]
-        public string Get() => "test";
-
         // TODO: Return a different status if not registered
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserRegistrationRequest request)
