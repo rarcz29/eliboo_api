@@ -23,9 +23,9 @@ namespace Eliboo.Api.Services
 
         // TODO: database connection
         // TODO: password hashing
-        public string Authenticate(string email, string password)
+        public async Task<string> AuthenticateAsync(string email, string password)
         {
-            var user = _unitOfWork.Users.GetUserByEmail(email);
+            var user = await _unitOfWork.Users.GetUserByEmailAsync(email);
 
             if (user != null && email == user.Email && password == user.Password)
             {
@@ -35,6 +35,7 @@ namespace Eliboo.Api.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Nickname),
                         new Claim(ClaimTypes.Email, user.Email)
                     }),
@@ -50,7 +51,7 @@ namespace Eliboo.Api.Services
             return null;
         }
 
-        public void Register(string username, string email, string password)
+        public async Task RegisterAsync(string username, string email, string password)
         {
             // TODO: library id
             var user = new User
@@ -62,7 +63,7 @@ namespace Eliboo.Api.Services
                 CreatedAt = DateTime.Now
             };
             _unitOfWork.Users.Add(user);
-            _unitOfWork.Commit();
+            await _unitOfWork.CommitAsync();
         }
     }
 }

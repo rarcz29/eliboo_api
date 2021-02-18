@@ -2,6 +2,7 @@
 using Eliboo.Api.Contracts.Responses;
 using Eliboo.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Eliboo.Api.Controllers
 {
@@ -18,19 +19,19 @@ namespace Eliboo.Api.Controllers
 
         // TODO: Return a different status if not registered
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserRegistrationRequest request)
+        public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {
             if (request.Password == request.Confirm)
             {
-                _identityManager.Register(request.Username, request.Email, request.Password);
+                await _identityManager.RegisterAsync(request.Username, request.Email, request.Password);
             }
             return Ok();
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserAuthenticationRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] UserAuthenticationRequest request)
         {
-            var token = _identityManager.Authenticate(request.Email, request.Password);
+            var token = await _identityManager.AuthenticateAsync(request.Email, request.Password);
             var response = new AuthSuccessResponse { Token = token };
             return token != null ? Ok(response) : Unauthorized();
         }

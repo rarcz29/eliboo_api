@@ -1,7 +1,9 @@
 ﻿using Eliboo.Data.DataAccess;
 using Eliboo.Data.Entities;
 using Eliboo.Data.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eliboo.Data.Repositories
 {
@@ -14,19 +16,11 @@ namespace Eliboo.Data.Repositories
             _db = db;
         }
 
-        public int GetLibraryIdByUsername(string username)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return _db.Users
-                .Where(u => u.Nickname == username)
-                .Select(u => u.Id)
-                .FirstOrDefault();
-        }
-
-        public User GetUserByEmail(string email)
-        {
-            return _db.Users
+            return await _db.Users
                 .Where(u => u.Email == email)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
     }
 }
