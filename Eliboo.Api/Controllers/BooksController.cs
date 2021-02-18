@@ -15,16 +15,16 @@ namespace Eliboo.Api.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public IActionResult GetAllBooks()
-        {
-            return BadRequest();
-        }
+        //[HttpGet]
+        //public IActionResult GetAllBooks()
+        //{
+        //    return BadRequest();
+        //}
 
-        public IActionResult AddNewBook([FromBody] BookDataRequest request)
-        {
-            _unitOfWork.Books.Add
-            return BadRequest();
-        }
+        //[HttpPost]
+        //public IActionResult AddNewBook([FromBody] BookDataRequest request)
+        //{
+        //    return BadRequest();
+        //}
     }
 }
