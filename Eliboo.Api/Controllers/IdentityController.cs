@@ -32,7 +32,7 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> Authenticate([FromBody] UserAuthenticationRequest request)
         {
             var token = await _identityManager.AuthenticateAsync(request.Email, request.Password);
-            var response = new AuthSuccessResponse { Token = token };
+            var response = new TokenResponse { Token = token };
             return token != null ? Ok(response) : Unauthorized();
         }
     }

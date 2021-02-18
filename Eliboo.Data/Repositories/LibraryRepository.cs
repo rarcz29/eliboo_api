@@ -12,5 +12,10 @@ namespace Eliboo.Data.Repositories
         {
             _db = db;
         }
+
+        public void RemoveUsingToken(string Token)
+        {
+            //_db.Libraries.Remove
+        }
     }
 }

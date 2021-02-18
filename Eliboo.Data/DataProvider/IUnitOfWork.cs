@@ -10,6 +10,8 @@ namespace Eliboo.Data.DataProvider
 
         IBookRepository Books { get; }
 
+        ILibraryRepository Libraries { get; }
+
         int Commit();
 
         Task<int> CommitAsync();

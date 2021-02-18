@@ -1,7 +1,12 @@
-﻿using Eliboo.Data.DataProvider;
+﻿using Eliboo.Api.Contracts.Requests;
+using Eliboo.Api.Contracts.Responses;
+using Eliboo.Data.DataProvider;
+using Eliboo.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Eliboo.Api.Controllers
 {
@@ -18,10 +23,24 @@ namespace Eliboo.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateNewLibrary()
+        public async Task<IActionResult> CreateNewLibrary()
         {
-            var username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return BadRequest(username);
+            // TODO: autogenerate token
+            string libToken = "asdfasdfasd";
+            var library = new Library { AccessToken = libToken };
+            _unitOfWork.Libraries.Add(library);
+            var affectedRows = await _unitOfWork.CommitAsync();
+            return affectedRows == 1
+                ? Ok(new TokenResponse { Token = libToken })
+                : StatusCode(StatusCodes.Status500InternalServerError,
+                             new FailResponse { Message = "Server cannot add new library to the database." });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveLibrary([FromBody] TokenRequest request)
+        {
+            // TODO
+            return BadRequest();
         }
     }
 }

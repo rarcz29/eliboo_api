@@ -13,11 +13,14 @@ namespace Eliboo.Data.DataProvider
             _db = db;
             Users = new UserRepository(db);
             Books = new BookRepository(db);
+            Libraries = new LibraryRepository(db);
         }
 
         public IUserRepository Users { get; private set; }
 
         public IBookRepository Books { get; private set; }
+
+        public ILibraryRepository Libraries { get; private set; }
 
         public int Commit()
         {
