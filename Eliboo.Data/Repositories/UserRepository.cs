@@ -14,6 +14,14 @@ namespace Eliboo.Data.Repositories
             _db = db;
         }
 
+        public int GetLibraryIdByUsername(string username)
+        {
+            return _db.Users
+                .Where(u => u.Nickname == username)
+                .Select(u => u.Id)
+                .FirstOrDefault();
+        }
+
         public User GetUserByEmail(string email)
         {
             return _db.Users

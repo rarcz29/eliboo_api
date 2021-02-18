@@ -1,4 +1,5 @@
-﻿using Eliboo.Data.DataProvider;
+﻿using Eliboo.Api.Contracts.Requests;
+using Eliboo.Data.DataProvider;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eliboo.Api.Controllers
@@ -17,7 +18,13 @@ namespace Eliboo.Api.Controllers
         [HttpGet]
         public IActionResult GetAllBooks()
         {
-            return Ok();
+            return BadRequest();
+        }
+
+        public IActionResult AddNewBook([FromBody] BookDataRequest request)
+        {
+            _unitOfWork.Books.Add
+            return BadRequest();
         }
     }
 }

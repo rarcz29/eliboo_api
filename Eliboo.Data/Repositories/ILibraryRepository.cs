@@ -3,7 +3,7 @@ using Eliboo.Data.GenericRepository;
 
 namespace Eliboo.Data.Repositories
 {
-    public interface IBookRepository : IRepository<Book>
+    public interface ILibraryRepository : IRepository<Library>
     {
     }
 }
