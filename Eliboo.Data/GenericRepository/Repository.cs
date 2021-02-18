@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Eliboo.Data.GenericRepository
 {
@@ -16,19 +17,19 @@ namespace Eliboo.Data.GenericRepository
             _db = db;
         }
 
-        public TEntity Get(int id)
+        public async Task<TEntity> GetAsync(int id)
         {
-            return _db.Set<TEntity>().Find(id);
+            return await _db.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _db.Set<TEntity>().ToList();
+            return await _db.Set<TEntity>().ToListAsync();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _db.Set<TEntity>().Where(predicate);
+            return await _db.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public void Add(TEntity entity)
