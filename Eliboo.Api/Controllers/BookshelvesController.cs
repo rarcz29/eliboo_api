@@ -25,7 +25,8 @@ namespace Eliboo.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewBookshelf([FromBody] NewBookshelfRequest request)
         {
-            var user = await GetUser();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = await _unitOfWork.Users.GetAsync(userId);
             var bookshelf = new Bookshelf { Description = request.Description, LibraryId = user.LibraryId };
             _unitOfWork.Bookshelves.Add(bookshelf);
             var affected = await _unitOfWork.CommitAsync();
@@ -35,19 +36,13 @@ namespace Eliboo.Api.Controllers
                              new FailResponse { Message = "Server didn't add this bookshelf to the database" });
         }
 
+        [HttpDelete]
         public async Task<IActionResult> RemoveBookshelf([FromBody] NewBookshelfRequest request)
         {
-            var user = await GetUser();
-            //_unitOfWork.Bookshelves.Remove(_unitOfWork.Bookshelves.FindAsync);
-            //_unitOfWork.Bookshelves.Add(bookshelf);
-            //var affected = await _unitOfWork.CommitAsync();
-            return BadRequest();
-        }
-
-        private async Task<User> GetUser()
-        {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return await _unitOfWork.Users.GetAsync(userId);
+            _unitOfWork.Bookshelves.Remove(request.Description, userId);
+            var affected = await _unitOfWork.CommitAsync();
+            return Ok(affected);
         }
     }
 }
