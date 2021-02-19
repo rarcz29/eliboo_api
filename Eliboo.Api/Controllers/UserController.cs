@@ -23,8 +23,16 @@ namespace Eliboo.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             _unitOfWork.Users.Remove(userId);
+            var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
+            var numberOfUsers = await _unitOfWork.Libraries.GetNumberOfUsersAsync(libraryId);
+
+            if (numberOfUsers < 2)
+            {
+                _unitOfWork.Libraries.Remove(libraryId);
+            }
+
             var affected = await _unitOfWork.CommitAsync();
-            return affected == 1 ? Ok() : StatusCode(500);
+            return affected > 0 ? Ok() : StatusCode(500);
         }
     }
 }

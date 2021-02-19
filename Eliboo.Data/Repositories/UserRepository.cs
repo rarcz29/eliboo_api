@@ -22,5 +22,13 @@ namespace Eliboo.Data.Repositories
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<int> GetLibraryIdAsync(int userId)
+        {
+            return await _db.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.LibraryId)
+                .FirstOrDefaultAsync();
+        }
     }
 }

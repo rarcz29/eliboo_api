@@ -9,5 +9,7 @@ namespace Eliboo.Data.Repositories
         void RemoveUsingToken(string Token);
 
         Task<int> GetId(string accessToken);
+
+        Task<int> GetNumberOfUsersAsync(int id);
     }
 }

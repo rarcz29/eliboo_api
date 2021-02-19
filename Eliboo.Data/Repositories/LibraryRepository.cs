@@ -24,9 +24,18 @@ namespace Eliboo.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<int> GetNumberOfUsersAsync(int id)
+        {
+            return await _db.Users
+                .Where(u => u.LibraryId == id)
+                .GroupBy(u => u.LibraryId)
+                .Select(g => g.Count())
+                .FirstOrDefaultAsync();
+        }
+
         public void RemoveUsingToken(string Token)
         {
-            //_db.Libraries.Remove
+            throw new System.NotImplementedException();
         }
     }
 }
