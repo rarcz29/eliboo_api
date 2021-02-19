@@ -12,6 +12,8 @@ namespace Eliboo.Data.DataProvider
 
         ILibraryRepository Libraries { get; }
 
+        IBookshelfRepository Bookshelves { get; }
+
         int Commit();
 
         Task<int> CommitAsync();

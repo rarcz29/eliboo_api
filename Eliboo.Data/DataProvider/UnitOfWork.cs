@@ -14,6 +14,7 @@ namespace Eliboo.Data.DataProvider
             Users = new UserRepository(db);
             Books = new BookRepository(db);
             Libraries = new LibraryRepository(db);
+            Bookshelves = new BookshelfRepository(db);
         }
 
         public IUserRepository Users { get; private set; }
@@ -21,6 +22,8 @@ namespace Eliboo.Data.DataProvider
         public IBookRepository Books { get; private set; }
 
         public ILibraryRepository Libraries { get; private set; }
+
+        public IBookshelfRepository Bookshelves { get; private set; }
 
         public int Commit()
         {

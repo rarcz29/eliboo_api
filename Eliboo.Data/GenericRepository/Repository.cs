@@ -17,6 +17,21 @@ namespace Eliboo.Data.GenericRepository
             _db = db;
         }
 
+        public TEntity Get(int id)
+        {
+            return _db.Set<TEntity>().Find(id);
+        }
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return _db.Set<TEntity>();
+        }
+
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _db.Set<TEntity>().Where(predicate);
+        }
+
         public async Task<TEntity> GetAsync(int id)
         {
             return await _db.Set<TEntity>().FindAsync(id);
