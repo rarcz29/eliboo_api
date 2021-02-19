@@ -1,7 +1,9 @@
 ﻿using Eliboo.Data.DataAccess;
 using Eliboo.Data.Entities;
 using Eliboo.Data.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eliboo.Data.Repositories
 {
@@ -14,17 +16,30 @@ namespace Eliboo.Data.Repositories
             _db = db;
         }
 
+        public async Task<int> GetIdAsync(string description, int userId)
+        {
+            return await _db.Bookshelves
+                .Where(b => b.Description == description
+                    && b.LibraryId == (
+                    _db.Users.Where(
+                    u => u.Id == userId)
+                        .Select(u => u.LibraryId))
+                        .FirstOrDefault())
+                    .Select(b => b.Id)
+                .FirstOrDefaultAsync();
+        }
+
         public void Remove(string description, int userId)
         {
             _db.Bookshelves.Remove(
                 _db.Bookshelves.Where(
-                    b => b.Description == description
-                        && b.LibraryId == (
-                            _db.Users.Where(
-                                u => u.Id == userId)
-                                    .Select(u => u.LibraryId))
-                            .FirstOrDefault())
-                .FirstOrDefault());
+                b => b.Description == description
+                && b.LibraryId == (
+                _db.Users.Where(
+                u => u.Id == userId)
+                    .Select(u => u.LibraryId))
+                .FirstOrDefault())
+            .FirstOrDefault());
         }
     }
 }
