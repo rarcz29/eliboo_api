@@ -19,6 +19,7 @@ namespace Eliboo.Data.GenericRepository
         void AddRange(IEnumerable<TEntity> entities);
 
         void Remove(TEntity entity);
+        void Remove(int id);
         void RemoveRange(IEnumerable<TEntity> entities);
     }
 }

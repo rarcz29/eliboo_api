@@ -1,11 +1,10 @@
-﻿using Eliboo.Api.Contracts.Requests;
-using Eliboo.Data.DataProvider;
+﻿using Eliboo.Data.DataProvider;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eliboo.Api.Controllers
 {
     [ApiController]
-    [Route("api/books")]
+    [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

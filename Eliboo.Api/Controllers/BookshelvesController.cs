@@ -12,7 +12,7 @@ namespace Eliboo.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/bookshelves")]
+    [Route("api/[controller]")]
     public class BookshelvesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

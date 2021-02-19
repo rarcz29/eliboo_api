@@ -92,6 +92,7 @@ namespace Eliboo.Api
                                .AllowAnyHeader();
                     });
             });
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IIdentityManager, IdentityManager>();

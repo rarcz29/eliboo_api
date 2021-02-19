@@ -16,7 +16,7 @@ namespace Eliboo.Data.Repositories
             _db = db;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
             return await _db.Users
                 .Where(u => u.Email == email)

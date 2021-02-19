@@ -62,6 +62,11 @@ namespace Eliboo.Data.GenericRepository
             _db.Set<TEntity>().Remove(entity);
         }
 
+        public void Remove(int id)
+        {
+            _db.Set<TEntity>().Remove(_db.Set<TEntity>().Find(id));
+        }
+
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _db.Set<TEntity>().RemoveRange(entities);

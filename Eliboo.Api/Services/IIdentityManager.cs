@@ -6,6 +6,8 @@ namespace Eliboo.Api.Services
     {
         Task<string> AuthenticateAsync(string email, string password);
 
-        Task RegisterAsync(string username, string email, string password);
+        Task<bool> RegisterAsync(string username, string email, string password);
+
+        Task<bool> RegisterAsync(string username, string email, string password, int libraryId);
     }
 }

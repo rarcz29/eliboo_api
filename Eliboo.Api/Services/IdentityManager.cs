@@ -21,11 +21,10 @@ namespace Eliboo.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        // TODO: database connection
         // TODO: password hashing
         public async Task<string> AuthenticateAsync(string email, string password)
         {
-            var user = await _unitOfWork.Users.GetUserByEmailAsync(email);
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
 
             if (user != null && email == user.Email && password == user.Password)
             {
@@ -51,19 +50,27 @@ namespace Eliboo.Api.Services
             return null;
         }
 
-        public async Task RegisterAsync(string username, string email, string password)
+        public async Task<bool> RegisterAsync(string username, string email, string password, int libraryId)
         {
-            // TODO: library id
             var user = new User
             {
-                LibraryId = 1,
+                LibraryId = libraryId,
                 Nickname = username,
                 Email = email,
                 Password = password,
                 CreatedAt = DateTime.Now
             };
             _unitOfWork.Users.Add(user);
+            return await _unitOfWork.CommitAsync() == 1;
+        }
+
+        public async Task<bool> RegisterAsync(string username, string email, string password)
+        {
+            // TODO: autogenerete access token
+            var library = new Library { AccessToken = "aasdfaasdffdsafasdf" };
+            _unitOfWork.Libraries.Add(library);
             await _unitOfWork.CommitAsync();
+            return await RegisterAsync(username, email, password, library.Id);
         }
     }
 }
