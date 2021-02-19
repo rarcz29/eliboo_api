@@ -19,9 +19,12 @@ namespace Eliboo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllBooks()
+        public async Task<IActionResult> GetAllBooks()
         {
-            return BadRequest();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
+            var books = await _unitOfWork.Books.GetAllFromLibraryAsync(libraryId);
+            return Ok(books);
         }
 
         [HttpPost]
@@ -41,6 +44,14 @@ namespace Eliboo.Api.Controllers
             _unitOfWork.Books.Add(book);
             var affected = await _unitOfWork.CommitAsync();
             return affected < 1 ? StatusCode(500) : Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveBook(int id)
+        {
+            _unitOfWork.Books.Remove(id);
+            var affected = await _unitOfWork.CommitAsync();
+            return affected < 1 ? BadRequest() : Ok();
         }
     }
 }
