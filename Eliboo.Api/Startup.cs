@@ -73,7 +73,12 @@ namespace Eliboo.Api
             {
                 options
                     .UseNpgsql(Configuration.GetConnectionString("Develop"))
-                    .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                    .UseLoggerFactory(
+                        LoggerFactory
+                            .Create(builder => builder.AddConsole()
+                            .AddFilter((category, level)
+                                => category == DbLoggerCategory.Database.Command.Name
+                                && level == LogLevel.Information)))
                     .EnableSensitiveDataLogging()
                     .UseSnakeCaseNamingConvention();
             });
