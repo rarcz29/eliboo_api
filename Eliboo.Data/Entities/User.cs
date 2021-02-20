@@ -13,7 +13,7 @@ namespace Eliboo.Data.Entities
 
         [Required]
         [MaxLength(30)]
-        public string Nickname { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [MaxLength(64)]

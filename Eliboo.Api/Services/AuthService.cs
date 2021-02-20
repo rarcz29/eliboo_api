@@ -35,7 +35,7 @@ namespace Eliboo.Api.Services
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.Nickname),
+                        new Claim(ClaimTypes.Name, user.Username),
                         new Claim(ClaimTypes.Email, user.Email)
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
@@ -55,7 +55,7 @@ namespace Eliboo.Api.Services
             var user = new User
             {
                 LibraryId = libraryId,
-                Nickname = username,
+                Username = username,
                 Email = email,
                 Password = password,
                 CreatedAt = DateTime.Now
