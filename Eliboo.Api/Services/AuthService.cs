@@ -1,4 +1,5 @@
-﻿using Eliboo.Data.DataProvider;
+﻿using Eliboo.Api.Options;
+using Eliboo.Data.DataProvider;
 using Eliboo.Data.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +18,9 @@ namespace Eliboo.Api.Services
 
         public AuthService(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
-            _key = configuration.GetValue<string>("JwtSettings:Secret");
+            var jwtOptions = new JwtOptions();
+            configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
+            _key = jwtOptions.Secret;
             _unitOfWork = unitOfWork;
         }
 
