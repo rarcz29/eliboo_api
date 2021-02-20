@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Eliboo.Api.Services
 {
-    public class IdentityManager : IIdentityManager
+    public class AuthService : IAuthService
     {
         private readonly string _key;
         private readonly IUnitOfWork _unitOfWork;
 
-        public IdentityManager(IConfiguration configuration, IUnitOfWork unitOfWork)
+        public AuthService(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
             _key = configuration.GetValue<string>("JwtSettings:Secret");
             _unitOfWork = unitOfWork;

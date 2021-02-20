@@ -95,7 +95,7 @@ namespace Eliboo.Api
             services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IIdentityManager, IdentityManager>();
+            services.AddTransient<IAuthService, AuthService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

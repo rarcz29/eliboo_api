@@ -12,9 +12,9 @@ namespace Eliboo.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IIdentityManager _identityManager;
+        private readonly IAuthService _identityManager;
 
-        public AuthController(IUnitOfWork unitOfWork, IIdentityManager identityManager)
+        public AuthController(IUnitOfWork unitOfWork, IAuthService identityManager)
         {
             _unitOfWork = unitOfWork;
             _identityManager = identityManager;
@@ -47,7 +47,7 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> Authenticate([FromBody] UserAuthenticationRequest request)
         {
             var token = await _identityManager.AuthenticateAsync(request.Email, request.Password);
-            var response = new TokenResponse { Token = token };
+            var response = new AuthSuccessResponse { Token = token };
             return token != null ? Ok(response) : Unauthorized();
         }
     }

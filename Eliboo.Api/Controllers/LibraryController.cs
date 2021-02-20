@@ -31,7 +31,7 @@ namespace Eliboo.Api.Controllers
             _unitOfWork.Libraries.Add(library);
             var affectedRows = await _unitOfWork.CommitAsync();
             return affectedRows == 1
-                ? Ok(new TokenResponse { Token = libToken })
+                ? Ok(new AuthSuccessResponse { Token = libToken })
                 : StatusCode(StatusCodes.Status500InternalServerError,
                              new FailResponse { Message = "Server cannot add new library to the database." });
         }

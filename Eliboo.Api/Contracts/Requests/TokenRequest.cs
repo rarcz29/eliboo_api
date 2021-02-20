@@ -2,7 +2,7 @@
 
 namespace Eliboo.Api.Contracts.Requests
 {
-    public class TokenRequest : TokenResponse
+    public class TokenRequest : AuthSuccessResponse
     {
     }
 }

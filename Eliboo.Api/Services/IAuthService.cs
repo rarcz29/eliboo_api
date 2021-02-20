@@ -2,7 +2,7 @@
 
 namespace Eliboo.Api.Services
 {
-    public interface IIdentityManager
+    public interface IAuthService
     {
         Task<string> AuthenticateAsync(string email, string password);
 
