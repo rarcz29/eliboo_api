@@ -1,3 +1,4 @@
+using Eliboo.Api.Options;
 using Eliboo.Api.Services;
 using Eliboo.Data.DataAccess;
 using Eliboo.Data.DataProvider;
@@ -103,9 +104,11 @@ namespace Eliboo.Api
         {
             if (env.IsDevelopment())
             {
+                var swaggerOptions = new SwaggerOptions();
+                Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Eliboo.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description));
             }
 
             app.UseHttpsRedirection();
