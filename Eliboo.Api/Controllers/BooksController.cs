@@ -1,7 +1,9 @@
 ﻿using Eliboo.Api.Contracts.Requests;
+using Eliboo.Api.Contracts.Responses;
 using Eliboo.Data.DataProvider;
 using Eliboo.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -24,7 +26,22 @@ namespace Eliboo.Api.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
             var books = await _unitOfWork.Books.GetAllFromLibraryAsync(libraryId);
-            return Ok(books);
+            var booksResponse = new List<BookResponse>();
+
+            // TODO: Bookshelf description
+            foreach (var book in books)
+            {
+                booksResponse.Add(new BookResponse
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Genre = book.Genre,
+                    Bookshelf = "you have to change this"
+                });
+            }
+
+            return Ok(new BooksListResponse { Books = booksResponse });
         }
 
         [HttpPost]
