@@ -24,7 +24,7 @@ namespace Eliboo.Api.Installers
                     .EnableSensitiveDataLogging()
                     .UseSnakeCaseNamingConvention();
             });
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Eliboo.Api.Services;
+﻿using Eliboo.Api.Options;
+using Eliboo.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,8 @@ namespace Eliboo.Api.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            var jwtOptions = new JwtOptions();
+            configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -23,8 +26,7 @@ namespace Eliboo.Api.Installers
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.ASCII.GetBytes(
-                            configuration.GetValue<string>("JwtSettings:Secret"))),
+                        Encoding.ASCII.GetBytes(jwtOptions.Secret)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
