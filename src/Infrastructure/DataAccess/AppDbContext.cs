@@ -8,10 +8,10 @@ namespace Eliboo.Infrastructure.DataAccess
     {
         public AppDbContext(DbContextOptions options) : base(options) { }
 
-        //public DbSet<Book> Books { get; set; }
-        //public DbSet<Bookshelf> Bookshelves { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Bookshelf> Bookshelves { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<Library> Libraries { get; set; }
+        public DbSet<Library> Libraries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
