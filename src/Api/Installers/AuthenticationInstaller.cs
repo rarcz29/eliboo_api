@@ -1,4 +1,4 @@
-﻿using Eliboo.Api.Options;
+﻿using Eliboo.Application.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

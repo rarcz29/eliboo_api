@@ -1,4 +1,4 @@
-﻿namespace Eliboo.Api.Options
+﻿namespace Eliboo.Application.Options
 {
     public class JwtOptions
     {

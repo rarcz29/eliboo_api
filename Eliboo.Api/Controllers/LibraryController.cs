@@ -36,11 +36,11 @@ namespace Eliboo.Api.Controllers
                              new FailResponse { Message = "Server cannot add new library to the database." });
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveLibrary([FromBody] TokenRequest request)
-        {
-            // TODO
-            return BadRequest();
-        }
+        //[HttpDelete]
+        //public async Task<IActionResult> RemoveLibrary([FromBody] TokenRequest request)
+        //{
+        //    // TODO
+        //    return BadRequest();
+        //}
     }
 }
