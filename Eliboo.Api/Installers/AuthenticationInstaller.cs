@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Eliboo.Api.Installers
 {
-    public class AuthenticationInstaller : IInstaller
+    public class AuthenticationInstaller : IInstaller2
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

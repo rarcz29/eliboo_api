@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Eliboo.Api.Installers
 {
-    public class CorsInstaller : IInstaller
+    public class CorsInstaller : IInstaller2
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

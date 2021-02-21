@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Eliboo.Api.Installers
 {
-    public class DataAccessInstaller : IInstaller
+    public class DataAccessInstaller : IInstaller2
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

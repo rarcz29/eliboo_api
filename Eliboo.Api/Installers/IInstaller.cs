@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Eliboo.Api.Installers
 {
-    interface IInstaller
+    interface IInstaller2
     {
         void InstallServices(IServiceCollection services, IConfiguration configuration);
     }
