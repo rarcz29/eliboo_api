@@ -1,4 +1,6 @@
-﻿using Eliboo.Application.Options;
+﻿using Eliboo.Api.Options;
+using Eliboo.Api.Services;
+using Eliboo.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,7 @@ namespace Eliboo.Api.Installers
                     ValidateAudience = false
                 };
             });
+            services.AddTransient<IAuthService, AuthService>();
         }
     }
 }

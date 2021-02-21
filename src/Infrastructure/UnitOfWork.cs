@@ -4,7 +4,7 @@ using Eliboo.Infrastructure.DataAccess;
 using Eliboo.Infrastructure.Repositories;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.Services
+namespace Eliboo.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {

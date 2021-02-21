@@ -1,4 +1,4 @@
-﻿using Eliboo.Application.Options;
+﻿using Eliboo.Api.Options;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
 using Microsoft.Extensions.Configuration;
