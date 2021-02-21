@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.DataAccess.Repositories
+namespace Eliboo.Infrastructure.Repositories
 {
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

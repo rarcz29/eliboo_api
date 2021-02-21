@@ -1,10 +1,11 @@
 ﻿using Eliboo.Application.Repositories;
 using Eliboo.Domain.Entities;
+using Eliboo.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.DataAccess.Repositories
+namespace Eliboo.Infrastructure.Repositories
 {
     class UserRepository : Repository<User>, IUserRepository
     {

@@ -1,11 +1,12 @@
 ﻿using Eliboo.Application.Repositories;
 using Eliboo.Domain.Entities;
+using Eliboo.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.DataAccess.Repositories
+namespace Eliboo.Infrastructure.Repositories
 {
     class BookRepository : Repository<Book>, IBookRepository
     {
