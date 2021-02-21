@@ -1,5 +1,6 @@
 ﻿using Eliboo.Api.Contracts.Responses;
 using Eliboo.Application.Services;
+using Eliboo.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
