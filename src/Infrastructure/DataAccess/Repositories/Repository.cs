@@ -6,9 +6,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.Repositories
+namespace Eliboo.Infrastructure.DataAccess.Repositories
 {
-    // TODO: Make calls async
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly DbContext _db;

@@ -1,7 +1,7 @@
 ﻿using Eliboo.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Eliboo.Infrastructure.Persistence
+namespace Eliboo.Infrastructure.DataAccess
 {
     public class AppDbContext : DbContext
     {

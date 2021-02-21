@@ -1,7 +1,7 @@
 ﻿using Eliboo.Application.Repositories;
 using Eliboo.Application.Services;
-using Eliboo.Infrastructure.Persistence;
-using Eliboo.Infrastructure.Repositories;
+using Eliboo.Infrastructure.DataAccess;
+using Eliboo.Infrastructure.DataAccess.Repositories;
 using System.Threading.Tasks;
 
 namespace Eliboo.Infrastructure.Services

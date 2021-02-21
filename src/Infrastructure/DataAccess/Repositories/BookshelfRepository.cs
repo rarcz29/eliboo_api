@@ -1,11 +1,10 @@
 ﻿using Eliboo.Application.Repositories;
 using Eliboo.Domain.Entities;
-using Eliboo.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Eliboo.Infrastructure.Repositories
+namespace Eliboo.Infrastructure.DataAccess.Repositories
 {
     class BookshelfRepository : Repository<Bookshelf>, IBookshelfRepository
     {
