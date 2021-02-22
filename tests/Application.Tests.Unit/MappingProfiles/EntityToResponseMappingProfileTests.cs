@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Xunit;
+using Eliboo.Api.Contracts.Responses;
 using Eliboo.Application.MappingProfiles;
 using Eliboo.Domain.Entities;
-using Eliboo.Api.Contracts.Responses;
 using System;
-using System.Runtime.Serialization;
+using Xunit;
 
 namespace Eliboo.Application.Tests.Unit.MappingProfiles
 {
@@ -16,12 +15,7 @@ namespace Eliboo.Application.Tests.Unit.MappingProfiles
         {
             if (_mapper == null)
             {
-                var mappingConfig = new MapperConfiguration(mc =>
-                {
-                    mc.AddProfile(new EntityToResponseMappingProfile());
-                });
-                IMapper mapper = mappingConfig.CreateMapper();
-                _mapper = mapper;
+                _mapper = TestsConfiguration.CreateMapper(new EntityToResponseMappingProfile());
             }
         }
 
@@ -29,8 +23,7 @@ namespace Eliboo.Application.Tests.Unit.MappingProfiles
         [InlineData(typeof(Book), typeof(BookResponse))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
-            var instance = GetInstanceOf(source);
-            _mapper.Map(instance, source, destination);
+            TestsConfiguration.ShouldSupportMapping(source, destination, _mapper);
         }
 
         [Fact]
@@ -56,14 +49,6 @@ namespace Eliboo.Application.Tests.Unit.MappingProfiles
             Assert.Equal(book.Author, response.Author);
             Assert.Equal(book.Genre, response.Genre);
             Assert.Equal(book.Bookshelf.Description, response.Bookshelf);
-        }
-
-        private object GetInstanceOf(Type type)
-        {
-            if (type.GetConstructor(Type.EmptyTypes) != null)
-                return Activator.CreateInstance(type);
-
-            return FormatterServices.GetUninitializedObject(type);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Eliboo.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewBook([FromBody] BookDataRequest request)
+        public async Task<IActionResult> AddNewBook([FromBody] BookRequest request)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var bookshelfId = await _unitOfWork.Bookshelves.GetIdAsync(request.Bookshelf, userId);

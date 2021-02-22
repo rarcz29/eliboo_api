@@ -1,6 +1,6 @@
 ﻿namespace Eliboo.Application.Contracts.Common
 {
-    public class Book
+    public class BookModelBase
     {
         public string Title { get; set; }
 

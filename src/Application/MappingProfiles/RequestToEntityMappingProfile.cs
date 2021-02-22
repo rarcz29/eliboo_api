@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using Eliboo.Api.Contracts.Requests;
+using Eliboo.Domain.Entities;
 
 namespace Eliboo.Application.MappingProfiles
 {
-    class RequestToEntityMappingProfile : Profile
+    public class RequestToEntityMappingProfile : Profile
     {
-        public EntityToResponseMappingProfile()
+        public RequestToEntityMappingProfile()
         {
-            CreateMap<BookRequest, BookResponse>()
-                .ForMember(d => d.Bookshelf, o => o.MapFrom(src => src.Bookshelf.Description));
+            CreateMap<BookRequest, Book>()
+                .ForMember(dest => dest.Bookshelf, act => act.MapFrom(src => new Bookshelf { Description = src.Bookshelf }));
         }
     }
 }

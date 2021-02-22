@@ -2,7 +2,7 @@
 
 namespace Eliboo.Api.Contracts.Requests
 {
-    public class BookDataRequest : Book
+    public class BookRequest : BookModelBase
     {
     }
 }

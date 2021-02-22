@@ -2,7 +2,7 @@
 
 namespace Eliboo.Api.Contracts.Responses
 {
-    public class BookResponse : Book
+    public class BookResponse : BookModelBase
     {
         public int Id { get; set; }
     }
