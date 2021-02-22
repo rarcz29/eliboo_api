@@ -1,4 +1,5 @@
-﻿using Eliboo.Api.Contracts.Requests;
+﻿using AutoMapper;
+using Eliboo.Api.Contracts.Requests;
 using Eliboo.Api.Contracts.Responses;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
@@ -14,10 +15,12 @@ namespace Eliboo.Api.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public BooksController(IUnitOfWork unitOfWork)
+        public BooksController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -26,20 +29,22 @@ namespace Eliboo.Api.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
             var books = await _unitOfWork.Books.GetAllFromLibraryAsync(libraryId);
-            var booksResponse = new List<BookResponse>();
+            var booksResponse = _mapper.Map<IEnumerable<BookResponse>>(books);
+            //var booksResponse = new List<BookResponse>();
 
-            // TODO: Bookshelf description
-            foreach (var book in books)
-            {
-                booksResponse.Add(new BookResponse
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    Author = book.Author,
-                    Genre = book.Genre,
-                    Bookshelf = "you have to change this"
-                });
-            }
+
+            //// TODO: Bookshelf description
+            //foreach (var book in books)
+            //{
+            //    booksResponse.Add(new BookResponse
+            //    {
+            //        Id = book.Id,
+            //        Title = book.Title,
+            //        Author = book.Author,
+            //        Genre = book.Genre,
+            //        Bookshelf = "you have to change this"
+            //    });
+            //}
 
             return Ok(new BooksListResponse { Books = booksResponse });
         }
