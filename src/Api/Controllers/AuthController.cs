@@ -11,12 +11,12 @@ namespace Eliboo.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAuthService _identityManager;
+        private readonly IAuthService _authService;
 
-        public AuthController(IUnitOfWork unitOfWork, IAuthService identityManager)
+        public AuthController(IUnitOfWork unitOfWork, IAuthService authService)
         {
             _unitOfWork = unitOfWork;
-            _identityManager = identityManager;
+            _authService = authService;
         }
 
         [HttpPost("register")]
@@ -28,12 +28,12 @@ namespace Eliboo.Api.Controllers
 
                 if (request.IsNewLibraryCheckboxChecked)
                 {
-                    registered = await _identityManager.RegisterAsync(request.Username, request.Email, request.Password);
+                    registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password);
                 }
                 else
                 {
                     var libraryId = await _unitOfWork.Libraries.GetId(request.LibraryCode);
-                    registered = await _identityManager.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
+                    registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
                 }
 
                 return registered ? Ok() : StatusCode(500);
@@ -45,7 +45,7 @@ namespace Eliboo.Api.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] UserAuthenticationRequest request)
         {
-            var token = await _identityManager.AuthenticateAsync(request.Email, request.Password);
+            var token = await _authService.AuthenticateAsync(request.Email, request.Password);
             var response = new AuthSuccessResponse { Token = token };
             return token != null ? Ok(response) : Unauthorized();
         }

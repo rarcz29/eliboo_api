@@ -30,22 +30,6 @@ namespace Eliboo.Api.Controllers
             var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
             var books = await _unitOfWork.Books.GetAllFromLibraryAsync(libraryId);
             var booksResponse = _mapper.Map<IEnumerable<BookResponse>>(books);
-            //var booksResponse = new List<BookResponse>();
-
-
-            //// TODO: Bookshelf description
-            //foreach (var book in books)
-            //{
-            //    booksResponse.Add(new BookResponse
-            //    {
-            //        Id = book.Id,
-            //        Title = book.Title,
-            //        Author = book.Author,
-            //        Genre = book.Genre,
-            //        Bookshelf = "you have to change this"
-            //    });
-            //}
-
             return Ok(new BooksListResponse { Books = booksResponse });
         }
 
@@ -54,15 +38,8 @@ namespace Eliboo.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var bookshelfId = await _unitOfWork.Bookshelves.GetIdAsync(request.Bookshelf, userId);
-
-            var book = new Book
-            {
-                Title = request.Title,
-                Author = request.Author,
-                Genre = request.Genre,
-                BookshelfId = bookshelfId
-            };
-
+            var book =  _mapper.Map<Book>(request);
+            book.BookshelfId = bookshelfId;
             _unitOfWork.Books.Add(book);
             var affected = await _unitOfWork.CommitAsync();
             return affected < 1 ? StatusCode(500) : Ok();
