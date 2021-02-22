@@ -41,7 +41,7 @@ namespace Eliboo.Api
             app.UseRouting();
             app.UseCors();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
