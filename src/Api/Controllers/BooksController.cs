@@ -3,6 +3,7 @@ using Eliboo.Api.Contracts.Requests;
 using Eliboo.Api.Contracts.Responses;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Eliboo.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
@@ -30,7 +32,7 @@ namespace Eliboo.Api.Controllers
             var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
             var books = await _unitOfWork.Books.GetAllFromLibraryAsync(libraryId);
             var booksResponse = _mapper.Map<IEnumerable<BookResponse>>(books);
-            return Ok(new BooksListResponse { Books = booksResponse });
+            return Ok(booksResponse);
         }
 
         [HttpPost]
@@ -42,7 +44,7 @@ namespace Eliboo.Api.Controllers
             book.BookshelfId = bookshelfId;
             _unitOfWork.Books.Add(book);
             var affected = await _unitOfWork.CommitAsync();
-            return affected < 1 ? StatusCode(500) : Ok();
+            return affected < 1 ? BadRequest() : Created($"api/books/{book.Id}", null);
         }
 
         [HttpDelete("{id}")]

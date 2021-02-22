@@ -9,7 +9,8 @@ namespace Eliboo.Application.MappingProfiles
         public RequestToEntityMappingProfile()
         {
             CreateMap<BookRequest, Book>()
-                .ForMember(dest => dest.Bookshelf, act => act.MapFrom(src => new Bookshelf { Description = src.Bookshelf }));
+                .ForMember(x => x.Bookshelf, opt => opt.Ignore());
+            //.ForMember(dest => dest.Bookshelf, act => act.MapFrom(src => new Bookshelf { Description = src.Bookshelf }));
         }
     }
 }

@@ -1,5 +1,6 @@
 using Eliboo.Api.Installers;
 using Eliboo.Api.Options;
+using Eliboo.Application;
 using Eliboo.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,7 @@ namespace Eliboo.Api
         {
             services.InstallServicesInAssembly(Configuration);
             services.AddInfrastructure(Configuration);
+            services.AddApplication();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
