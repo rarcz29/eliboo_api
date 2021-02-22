@@ -1,13 +1,8 @@
-﻿namespace Eliboo.Api.Contracts.Requests
+﻿using Eliboo.Application.Contracts.Common;
+
+namespace Eliboo.Api.Contracts.Requests
 {
-    public class BookDataRequest
+    public class BookDataRequest : Book
     {
-        public string Title { get; set; }
-
-        public string Author { get; set; }
-
-        public string Genre { get; set; }
-
-        public string Bookshelf { get; set; }
     }
 }
