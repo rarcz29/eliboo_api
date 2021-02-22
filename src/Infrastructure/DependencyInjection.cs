@@ -1,15 +1,15 @@
-﻿using Eliboo.Data.DataAccess;
-using Eliboo.Data.DataProvider;
+﻿using Eliboo.Application.Services;
+using Eliboo.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Eliboo.Api.Installers
+namespace Eliboo.Infrastructure
 {
-    public class DataAccessInstaller : IInstaller2
+    public static class DependencyInjection
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -24,7 +24,8 @@ namespace Eliboo.Api.Installers
                     .EnableSensitiveDataLogging()
                     .UseSnakeCaseNamingConvention();
             });
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            return services;
         }
     }
 }

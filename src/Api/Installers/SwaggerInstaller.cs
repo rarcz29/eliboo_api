@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Eliboo.Api.Installers
 {
-    public class SwaggerInstaller : IInstaller2
+    public class SwaggerInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

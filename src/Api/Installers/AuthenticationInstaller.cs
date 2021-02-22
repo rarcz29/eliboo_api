@@ -1,5 +1,6 @@
 ﻿using Eliboo.Api.Options;
 using Eliboo.Api.Services;
+using Eliboo.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Eliboo.Api.Installers
 {
-    public class AuthenticationInstaller : IInstaller2
+    public class AuthenticationInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {

@@ -1,11 +1,9 @@
-﻿using Eliboo.Api.Contracts.Requests;
-using Eliboo.Api.Contracts.Responses;
-using Eliboo.Data.DataProvider;
-using Eliboo.Data.Entities;
+﻿using Eliboo.Api.Contracts.Responses;
+using Eliboo.Application.Services;
+using Eliboo.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Eliboo.Api.Controllers
