@@ -1,4 +1,4 @@
-﻿namespace Eliboo.Api.Contracts.Requests
+﻿namespace Eliboo.Application.Contracts.Requests
 {
     public class NewBookshelfRequest
     {

@@ -1,5 +1,5 @@
-﻿using Eliboo.Api.Contracts.Requests;
-using Eliboo.Api.Contracts.Responses;
+﻿using Eliboo.Application.Contracts.Requests;
+using Eliboo.Application.Contracts.Responses;
 using Eliboo.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -36,7 +36,7 @@ namespace Eliboo.Api.Controllers
                     registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
                 }
 
-                return registered ? Ok() : StatusCode(500);
+                return registered ? Ok() : BadRequest(new FailResponse { Message = "Ups, there's a problem"});
 
             }
             return StatusCode(406);

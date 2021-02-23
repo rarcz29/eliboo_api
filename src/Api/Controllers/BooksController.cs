@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Eliboo.Api.Contracts.Requests;
 using Eliboo.Api.Contracts.Responses;
+using Eliboo.Application.Contracts.Requests;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +40,7 @@ namespace Eliboo.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var bookshelfId = await _unitOfWork.Bookshelves.GetIdAsync(request.Bookshelf, userId);
-            var book =  _mapper.Map<Book>(request);
+            var book = _mapper.Map<Book>(request);
             book.BookshelfId = bookshelfId;
             _unitOfWork.Books.Add(book);
             var affected = await _unitOfWork.CommitAsync();
@@ -51,6 +51,14 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> RemoveBook(int id)
         {
             _unitOfWork.Books.Remove(id);
+            var affected = await _unitOfWork.CommitAsync();
+            return affected < 1 ? BadRequest() : Ok();
+        }
+
+        [HttpDelete()]
+        public async Task<IActionResult> RemoveBooks([FromBody] IEnumerable<IdRequest> request)
+        {
+            _unitOfWork.Books.Remove(1);
             var affected = await _unitOfWork.CommitAsync();
             return affected < 1 ? BadRequest() : Ok();
         }

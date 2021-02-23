@@ -1,6 +1,6 @@
-﻿using Eliboo.Api.Contracts.Responses;
+﻿using Eliboo.Application.Contracts.Responses;
 
-namespace Eliboo.Api.Contracts.Requests
+namespace Eliboo.Application.Contracts.Requests
 {
     public class TokenRequest : AuthSuccessResponse
     {

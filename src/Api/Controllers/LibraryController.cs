@@ -1,4 +1,4 @@
-﻿using Eliboo.Api.Contracts.Responses;
+﻿using Eliboo.Application.Contracts.Responses;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;

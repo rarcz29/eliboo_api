@@ -1,4 +1,4 @@
-﻿namespace Eliboo.Api.Contracts.Requests
+﻿namespace Eliboo.Application.Contracts.Requests
 {
     public class UserRegistrationRequest
     {
@@ -8,12 +8,12 @@
 
         public string Password { get; set; }
 
-        public string Confirm{ get; set; }
+        public string Confirm { get; set; }
 
         public string CreateNewLibrary { get; set; }
 
         public bool IsNewLibraryCheckboxChecked
-        { 
+        {
             get => !(CreateNewLibrary == null
                      || CreateNewLibrary == "false"
                      || CreateNewLibrary == "0");

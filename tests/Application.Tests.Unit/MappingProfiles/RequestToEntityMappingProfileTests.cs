@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Eliboo.Api.Contracts.Requests;
+using Eliboo.Application.Contracts.Requests;
 using Eliboo.Application.MappingProfiles;
 using Eliboo.Domain.Entities;
 using System;

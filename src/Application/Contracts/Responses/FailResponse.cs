@@ -1,4 +1,4 @@
-﻿namespace Eliboo.Api.Contracts.Responses
+﻿namespace Eliboo.Application.Contracts.Responses
 {
     public class FailResponse
     {
