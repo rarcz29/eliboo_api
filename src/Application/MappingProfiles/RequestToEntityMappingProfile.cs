@@ -11,6 +11,8 @@ namespace Eliboo.Application.MappingProfiles
             CreateMap<BookRequest, Book>()
                 .ForMember(x => x.Bookshelf, opt => opt.Ignore());
             //.ForMember(dest => dest.Bookshelf, act => act.MapFrom(src => new Bookshelf { Description = src.Bookshelf }));
+
+            CreateMap<IdRequest, Book>();
         }
     }
 }

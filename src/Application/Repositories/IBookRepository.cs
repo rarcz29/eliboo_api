@@ -7,5 +7,7 @@ namespace Eliboo.Application.Repositories
     public interface IBookRepository : IRepository<Book>
     {
         Task<IEnumerable<Book>> GetAllFromLibraryAsync(int libraryId);
+
+        Task<IEnumerable<Book>> FindBooks(Book pattern);
     }
 }

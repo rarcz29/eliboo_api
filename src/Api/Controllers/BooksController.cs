@@ -58,9 +58,15 @@ namespace Eliboo.Api.Controllers
         [HttpDelete()]
         public async Task<IActionResult> RemoveBooks([FromBody] IEnumerable<IdRequest> request)
         {
-            _unitOfWork.Books.Remove(1);
+            var booksToRemove = _mapper.Map<List<Book>>(request);
+            _unitOfWork.Books.RemoveRange(booksToRemove);
             var affected = await _unitOfWork.CommitAsync();
             return affected < 1 ? BadRequest() : Ok();
+        }
+
+        public async Task<IActionResult> FindBooks([FromBody] BookRequest request)
+        {
+            var books = _mapper.Map<Book>(request);
         }
     }
 }

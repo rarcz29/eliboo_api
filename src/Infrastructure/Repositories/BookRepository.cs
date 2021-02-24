@@ -17,6 +17,11 @@ namespace Eliboo.Infrastructure.Repositories
             _db = db;
         }
 
+        public Task<IEnumerable<Book>> FindBooks(Book pattern)
+        {
+            //_db.Books.Where(b => EF.Functions.Like);
+        }
+
         public async Task<IEnumerable<Book>> GetAllFromLibraryAsync(int libraryId)
         {
             return await _db.Books
