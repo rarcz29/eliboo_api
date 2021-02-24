@@ -8,6 +8,6 @@ namespace Eliboo.Application.Repositories
     {
         Task AddBooksToTheListAsync(int userId, IEnumerable<int> bookids);
 
-        Task<IEnumerable<Book>> GetAllBooksFromListAsync();
+        Task<IEnumerable<Book>> GetAllBooksFromListAsync(int userId);
     }
 }

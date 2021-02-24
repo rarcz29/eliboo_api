@@ -1,4 +1,6 @@
-﻿using Eliboo.Application.Contracts.Requests;
+﻿using AutoMapper;
+using Eliboo.Api.Contracts.Responses;
+using Eliboo.Application.Contracts.Requests;
 using Eliboo.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +16,21 @@ namespace Eliboo.Api.Controllers
     public class ListController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ListController(IUnitOfWork unitOfWork)
+        public ListController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return BadRequest();
+            var books = await _unitOfWork.MyList.GetAllBooksFromListAsync(userId);
+            var response = _mapper.Map<IEnumerable<BookResponse>>(books);
+            return Ok(response);
         }
 
         [HttpPost]

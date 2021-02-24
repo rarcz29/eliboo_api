@@ -30,10 +30,11 @@ namespace Eliboo.Infrastructure.Repositories
             existingBooks.ForEach(b => user.Books.Add(b));
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksFromListAsync()
+        public async Task<IEnumerable<Book>> GetAllBooksFromListAsync(int userId)
         {
             return await _db.Users
                 .Include(u => u.Books)
+                .Where(u => u.Id == userId)
                 .Select(u => u.Books)
                 .FirstOrDefaultAsync();
         }
