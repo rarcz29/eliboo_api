@@ -17,6 +17,7 @@ namespace Eliboo.Infrastructure
             Books = new BookRepository(db);
             Libraries = new LibraryRepository(db);
             Bookshelves = new BookshelfRepository(db);
+            MyList = new ListRepository(db);
         }
 
         public IUserRepository Users { get; private set; }
@@ -26,6 +27,8 @@ namespace Eliboo.Infrastructure
         public ILibraryRepository Libraries { get; private set; }
 
         public IBookshelfRepository Bookshelves { get; private set; }
+
+        public IListRepository MyList { get; private set; }
 
         public int Commit()
         {

@@ -12,6 +12,6 @@ namespace Eliboo.Domain.Entities
         public int BookshelfId { get; set; }
         public Bookshelf Bookshelf { get; set; }
 
-        public IEnumerable<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

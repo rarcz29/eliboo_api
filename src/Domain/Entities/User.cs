@@ -14,6 +14,6 @@ namespace Eliboo.Domain.Entities
         public int LibraryId { get; set; }
         public Library Library { get; set; }
 
-        public IEnumerable<Book> Books { get; set; }
+        public ICollection<Book> Books { get; set; }
     }
 }

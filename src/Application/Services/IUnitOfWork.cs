@@ -14,6 +14,8 @@ namespace Eliboo.Application.Services
 
         IBookshelfRepository Bookshelves { get; }
 
+        IListRepository MyList { get; }
+
         int Commit();
 
         Task<int> CommitAsync();
