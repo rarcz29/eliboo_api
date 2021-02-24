@@ -64,9 +64,15 @@ namespace Eliboo.Api.Controllers
             return affected < 1 ? BadRequest() : Ok();
         }
 
-        public async Task<IActionResult> FindBooks([FromBody] BookRequest request)
+        [HttpGet("find")]
+        public async Task<IActionResult> FindBooks([FromQuery] BookRequest request)
         {
-            var books = _mapper.Map<Book>(request);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var libraryId = await _unitOfWork.Users.GetLibraryIdAsync(userId);
+            var pattern = _mapper.Map<Book>(request);
+            var books = await _unitOfWork.Books.FindBooksAsync(pattern, libraryId);
+            var response = _mapper.Map<IEnumerable<BookResponse>>(books);
+            return Ok(response);
         }
     }
 }
