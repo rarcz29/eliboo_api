@@ -24,7 +24,8 @@ namespace Eliboo.Infrastructure.Repositories
                 .SingleAsync(u => u.Id == userId);
 
             var existingBooks = await _db.Books
-                .Where(b => bookIds.Contains(b.Id))
+                .Include(b => b.Bookshelf)
+                .Where(b => bookIds.Contains(b.Id) && b.Bookshelf.LibraryId == user.LibraryId)
                 .ToListAsync();
 
             existingBooks.ForEach(b => user.Books.Add(b));
