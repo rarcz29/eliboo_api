@@ -32,6 +32,7 @@ namespace Eliboo.Infrastructure.Repositories
         public async Task<IEnumerable<Book>> GetAllFromLibraryAsync(int libraryId)
         {
             return await _db.Books
+                .Include(b => b.Bookshelf)
                 .Where(b => b.BookshelfId == _db.Bookshelves.Where(bs => bs.LibraryId == libraryId)
                     .Select(bs => bs.Id).FirstOrDefault())
                 .ToListAsync();

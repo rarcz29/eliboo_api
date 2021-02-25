@@ -33,11 +33,24 @@ namespace Eliboo.Infrastructure.Repositories
 
         public async Task<IEnumerable<Book>> GetAllBooksFromListAsync(int userId)
         {
-            return await _db.Users
+            return await _db.Books
+                .Include(b => b.Users.Where(u => u.Id == userId))
+                .Include(b => b.Bookshelf)
+                .ToListAsync();
+        }
+
+        public async Task RemoveBooksFromListAsync(int userId, IEnumerable<int> bookIds)
+        {
+            var user = await _db.Users
                 .Include(u => u.Books)
-                .Where(u => u.Id == userId)
-                .Select(u => u.Books)
-                .FirstOrDefaultAsync();
+                .SingleAsync(u => u.Id == userId);
+
+            var existingBooks = await _db.Books
+                .Include(b => b.Bookshelf)
+                .Where(b => bookIds.Contains(b.Id) && b.Bookshelf.LibraryId == user.LibraryId)
+                .ToListAsync();
+
+            existingBooks.ForEach(b => user.Books.Remove(b));
         }
     }
 }

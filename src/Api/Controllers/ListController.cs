@@ -49,5 +49,22 @@ namespace Eliboo.Api.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveBooksFromList([FromBody] IEnumerable<IdRequest> request)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var bookIds = new List<int>();
+
+            foreach (var idRequest in request)
+            {
+                bookIds.Add(idRequest.Id);
+            }
+
+            await _unitOfWork.MyList.RemoveBooksFromListAsync(userId, bookIds);
+            await _unitOfWork.CommitAsync();
+
+            return Ok();
+        }
     }
 }
