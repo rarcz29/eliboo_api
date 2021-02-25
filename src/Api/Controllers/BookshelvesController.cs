@@ -26,8 +26,8 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            //var libraryId = _unitOfWork.Libraries.GetId();
-            return BadRequest();
+            var bookshelves = await _unitOfWork.Bookshelves.GetAll(userId);
+            return Ok(bookshelves);
         }
 
         [HttpPost]
