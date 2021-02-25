@@ -22,6 +22,14 @@ namespace Eliboo.Api.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //var libraryId = _unitOfWork.Libraries.GetId();
+            return BadRequest();
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateNewBookshelf([FromBody] NewBookshelfRequest request)
         {

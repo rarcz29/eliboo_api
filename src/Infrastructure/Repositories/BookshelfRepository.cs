@@ -2,6 +2,7 @@
 using Eliboo.Domain.Entities;
 using Eliboo.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,18 @@ namespace Eliboo.Infrastructure.Repositories
         public BookshelfRepository(AppDbContext db) : base(db)
         {
             _db = db;
+        }
+
+        public async Task<IEnumerable<Bookshelf>> GetAll(int userId)
+        {
+            var libraryId = await _db.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.LibraryId)
+                .FirstOrDefaultAsync();
+
+            return await _db.Bookshelves
+                .Where(b => b.LibraryId == libraryId)
+                .ToListAsync();
         }
 
         public async Task<int> GetIdAsync(string description, int userId)
