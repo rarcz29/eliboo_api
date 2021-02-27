@@ -33,9 +33,14 @@ namespace Eliboo.Infrastructure.Repositories
         {
             return await _db.Books
                 .Include(b => b.Bookshelf)
-                .Where(b => b.BookshelfId == _db.Bookshelves.Where(bs => bs.LibraryId == libraryId)
-                    .Select(bs => bs.Id).FirstOrDefault())
+                .Where(b => _db.Bookshelves.Where(bs => bs.LibraryId == libraryId)
+                    .Select(bs => bs.Id).Contains(b.BookshelfId))
                 .ToListAsync();
+
+            //return await _db.Bookshelves
+            //    .Include(bs => bs.Books)
+            //    .Where(bs => bs.LibraryId == libraryId)
+            //    .ToListAsync();
         }
     }
 }

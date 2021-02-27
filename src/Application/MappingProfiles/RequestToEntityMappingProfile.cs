@@ -13,6 +13,7 @@ namespace Eliboo.Application.MappingProfiles
             //.ForMember(dest => dest.Bookshelf, act => act.MapFrom(src => new Bookshelf { Description = src.Bookshelf }));
 
             CreateMap<IdRequest, Book>();
+            CreateMap<IdRequest, Bookshelf>();
         }
     }
 }

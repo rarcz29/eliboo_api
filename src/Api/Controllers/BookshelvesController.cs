@@ -1,10 +1,12 @@
-﻿using Eliboo.Application.Contracts.Requests;
+﻿using AutoMapper;
+using Eliboo.Application.Contracts.Requests;
 using Eliboo.Application.Contracts.Responses;
 using Eliboo.Application.Services;
 using Eliboo.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,10 +18,12 @@ namespace Eliboo.Api.Controllers
     public class BookshelvesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public BookshelvesController(IUnitOfWork unitOfWork)
+        public BookshelvesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -45,10 +49,12 @@ namespace Eliboo.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveBookshelf([FromBody] NewBookshelfRequest request)
+        public async Task<IActionResult> RemoveBookshelves([FromBody] IEnumerable<IdRequest> request)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            _unitOfWork.Bookshelves.Remove(request.Description, userId);
+            var bookshelves = _mapper.Map<IEnumerable<Bookshelf>>(request);
+            _unitOfWork.Bookshelves.RemoveRange(bookshelves);
+            //_unitOfWork.Bookshelves.Remove(request.Description, userId);
             var affected = await _unitOfWork.CommitAsync();
             return Ok(affected);
         }
