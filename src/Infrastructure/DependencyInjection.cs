@@ -1,5 +1,6 @@
 ﻿using Eliboo.Application.Services;
 using Eliboo.Infrastructure.DataAccess;
+using Eliboo.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace Eliboo.Infrastructure
                     .UseSnakeCaseNamingConvention();
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
             return services;
         }
     }

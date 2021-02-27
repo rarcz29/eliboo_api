@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Eliboo.Application.Services
+﻿namespace Eliboo.Application.Services
 {
-    class PasswordHashService
+    public interface IPasswordHashService
     {
+        string CreateHash(string password);
+        bool ValidatePassword(string password, string correctHash);
+        bool SlowEquals(byte[] a, byte[] b);
+        byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes);
     }
 }
