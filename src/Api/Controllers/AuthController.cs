@@ -36,7 +36,7 @@ namespace Eliboo.Api.Controllers
                     registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
                 }
 
-                return registered ? Ok() : BadRequest(new FailResponse { Message = "Ups, there's a problem"});
+                return registered ? Ok() : BadRequest();
 
             }
             return StatusCode(406);

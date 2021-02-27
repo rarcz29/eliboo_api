@@ -13,6 +13,12 @@ namespace Eliboo.Infrastructure.DataAccess.Configurations
                 .WithMany(u => u.Books)
                 .UsingEntity(j => j.ToTable("my_list"));
 
+            builder
+                .HasOne(b => b.User)
+                .WithOne(u => u.CurrentReading)
+                .HasForeignKey<User>(u => u.CurrentReadingId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.Property(b => b.BookshelfId)
                 .IsRequired();
 

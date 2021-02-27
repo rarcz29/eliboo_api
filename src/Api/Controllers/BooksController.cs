@@ -74,5 +74,23 @@ namespace Eliboo.Api.Controllers
             var response = _mapper.Map<IEnumerable<BookResponse>>(books);
             return Ok(response);
         }
+
+        [HttpGet("current")]
+        public async Task<IActionResult> GetCurrentBook()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var readingNow = await _unitOfWork.Books.GetReadingNow(userId);
+            var response = _mapper.Map<BookResponse>(readingNow);
+            return Ok(response);
+        }
+
+        [HttpPatch("current/{id}")]
+        public async Task<IActionResult> AddReadingNow([FromRoute] int id)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _unitOfWork.Books.AddToReaingNow(userId, id);
+            var affected = await _unitOfWork.CommitAsync();
+            return affected < 1 ? BadRequest() : Ok();
+        }
     }
 }

@@ -11,6 +11,9 @@ namespace Eliboo.Domain.Entities
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public int? CurrentReadingId { get; set; }
+        public Book CurrentReading { get; set; }
+
         public int LibraryId { get; set; }
         public Library Library { get; set; }
 

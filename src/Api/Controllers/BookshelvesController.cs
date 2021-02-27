@@ -42,21 +42,16 @@ namespace Eliboo.Api.Controllers
             var bookshelf = new Bookshelf { Description = request.Description, LibraryId = user.LibraryId };
             _unitOfWork.Bookshelves.Add(bookshelf);
             var affected = await _unitOfWork.CommitAsync();
-            return affected == 1
-                ? Ok()
-                : StatusCode(StatusCodes.Status500InternalServerError,
-                             new FailResponse { Message = "Server didn't add this bookshelf to the database" });
+            return affected < 1 ? BadRequest() : Ok();
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveBookshelves([FromBody] IEnumerable<IdRequest> request)
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var bookshelves = _mapper.Map<IEnumerable<Bookshelf>>(request);
             _unitOfWork.Bookshelves.RemoveRange(bookshelves);
-            //_unitOfWork.Bookshelves.Remove(request.Description, userId);
             var affected = await _unitOfWork.CommitAsync();
-            return Ok(affected);
+            return affected < 1 ? BadRequest() : Ok();
         }
     }
 }

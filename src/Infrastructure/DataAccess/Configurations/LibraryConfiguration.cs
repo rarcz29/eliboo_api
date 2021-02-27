@@ -9,7 +9,7 @@ namespace Eliboo.Infrastructure.DataAccess.Configurations
         public void Configure(EntityTypeBuilder<Library> builder)
         {
             builder.Property(l => l.AccessToken)
-                .HasMaxLength(32)
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder

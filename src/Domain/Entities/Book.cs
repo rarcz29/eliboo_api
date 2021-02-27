@@ -9,6 +9,8 @@ namespace Eliboo.Domain.Entities
         public string Author { get; set; }
         public string Genre { get; set; }
 
+        public User User { get; set; }
+
         public int BookshelfId { get; set; }
         public Bookshelf Bookshelf { get; set; }
 

@@ -69,8 +69,8 @@ namespace Eliboo.Api.Services
 
         public async Task<bool> RegisterAsync(string username, string email, string password)
         {
-            // TODO: autogenerete access token
-            var library = new Library { AccessToken = "aasdfaasdffdsafasdf" };
+            string libToken = Guid.NewGuid().ToString();
+            var library = new Library { AccessToken = libToken };
             _unitOfWork.Libraries.Add(library);
             await _unitOfWork.CommitAsync();
             return await RegisterAsync(username, email, password, library.Id);

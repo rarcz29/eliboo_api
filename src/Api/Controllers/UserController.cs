@@ -32,7 +32,7 @@ namespace Eliboo.Api.Controllers
             }
 
             var affected = await _unitOfWork.CommitAsync();
-            return affected > 0 ? Ok() : StatusCode(500);
+            return affected > 0 ? Ok() : BadRequest();
         }
     }
 }
