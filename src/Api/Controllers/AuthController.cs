@@ -33,7 +33,11 @@ namespace Eliboo.Api.Controllers
                 else
                 {
                     var libraryId = await _unitOfWork.Libraries.GetId(request.LibraryCode);
-                    registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
+
+                    if (libraryId != 0)
+                    {
+                        registered = await _authService.RegisterAsync(request.Username, request.Email, request.Password, libraryId);
+                    }
                 }
 
                 return registered ? Ok() : BadRequest();

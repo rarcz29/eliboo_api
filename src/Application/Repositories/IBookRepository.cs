@@ -12,6 +12,8 @@ namespace Eliboo.Application.Repositories
 
         Task<Book> GetReadingNow(int userId);
 
-        Task AddToReaingNow(int userId, int bookId);
+        Task AddToReadingNowAsync(int userId, int bookId);
+
+        Task RemoveReadingNowAsync(int userId);
     }
 }

@@ -45,9 +45,9 @@ namespace Eliboo.Api.Controllers
             }
 
             await _unitOfWork.MyList.AddBooksToTheListAsync(userId, bookIds);
-            await _unitOfWork.CommitAsync();
+            var affected = await _unitOfWork.CommitAsync();
 
-            return Ok();
+            return affected < 1 ? Conflict() : Ok();
         }
 
         [HttpDelete]

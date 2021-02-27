@@ -88,9 +88,18 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> AddReadingNow([FromRoute] int id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _unitOfWork.Books.AddToReaingNow(userId, id);
-            await _unitOfWork.CommitAsync();
-            return Ok();
+            await _unitOfWork.Books.AddToReadingNowAsync(userId, id);
+            var affected = await _unitOfWork.CommitAsync();
+            return affected < 0 ? Conflict() : Ok();
+        }
+
+        [HttpDelete("current")]
+        public async Task<IActionResult> RemoveReadingNow()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _unitOfWork.Books.RemoveReadingNowAsync(userId);
+            var affected = await _unitOfWork.CommitAsync();
+            return affected < 1 ? NoContent() : Ok();
         }
     }
 }

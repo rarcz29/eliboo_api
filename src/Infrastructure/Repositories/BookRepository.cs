@@ -17,13 +17,15 @@ namespace Eliboo.Infrastructure.Repositories
             _db = db;
         }
 
-        public async Task AddToReaingNow(int userId, int bookId)
+        public async Task AddToReadingNowAsync(int userId, int bookId)
         {
-            var user = await _db.Users
-                .FindAsync(userId);
-
+            var user = await _db.Users.FindAsync(userId);
             var book = await _db.Books.FindAsync(bookId);
-            user.CurrentReading = book;
+
+            if (book != null)
+            {
+                user.CurrentReading = book;
+            }
         }
 
         public async Task<IEnumerable<Book>> FindBooksAsync(Book pattern, int libraryId)
@@ -52,6 +54,13 @@ namespace Eliboo.Infrastructure.Repositories
                 .Include(b => b.User)
                 .Where(b => b.User.Id == userId)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task RemoveReadingNowAsync(int userId)
+        {
+            var user = await _db.Users.FindAsync(userId);
+            user.CurrentReading = null;
+            user.CurrentReadingId = null;
         }
     }
 }
