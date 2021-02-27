@@ -30,11 +30,10 @@ namespace Eliboo.Infrastructure.Repositories
         {
             return await _db.Books
                 .Include(book => book.Bookshelf)
-                .Where(b => (EF.Functions.Like(b.Title, $"%{pattern.Title}%")
+                .Where(b => EF.Functions.Like(b.Title, $"%{pattern.Title}%")
                     || EF.Functions.Like(b.Author, $"%{pattern.Author}%")
                     || EF.Functions.Like(b.Genre, $"%{pattern.Genre}%")
                     || EF.Functions.Like(b.Bookshelf.Description, $"%{pattern.Bookshelf}%"))
-                    && b.Bookshelf.LibraryId == libraryId)
                 .ToListAsync();
         }
 
@@ -50,7 +49,8 @@ namespace Eliboo.Infrastructure.Repositories
         public async Task<Book> GetReadingNow(int userId)
         {
             return await _db.Books
-                .Include(b => b.User.Id == userId)
+                .Include(b => b.User)
+                .Where(b => b.User.Id == userId)
                 .FirstOrDefaultAsync();
         }
     }

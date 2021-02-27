@@ -28,7 +28,7 @@ namespace Eliboo.Infrastructure.DataAccess.Configurations
                 .IsUnique();
 
             builder.Property(u => u.Password)
-                .HasMaxLength(30)
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.CreatedAt)

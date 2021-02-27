@@ -89,8 +89,8 @@ namespace Eliboo.Api.Controllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _unitOfWork.Books.AddToReaingNow(userId, id);
-            var affected = await _unitOfWork.CommitAsync();
-            return affected < 1 ? BadRequest() : Ok();
+            await _unitOfWork.CommitAsync();
+            return Ok();
         }
     }
 }
