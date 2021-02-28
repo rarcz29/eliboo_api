@@ -32,10 +32,9 @@ namespace Eliboo.Infrastructure.Repositories
         {
             return await _db.Books
                 .Include(book => book.Bookshelf)
-                .Where(b => EF.Functions.Like(b.Title, $"%{pattern.Title}%")
-                    || EF.Functions.Like(b.Author, $"%{pattern.Author}%")
-                    || EF.Functions.Like(b.Genre, $"%{pattern.Genre}%")
-                    || EF.Functions.Like(b.Bookshelf.Description, $"%{pattern.Bookshelf}%"))
+                .Where(b => (pattern.Title != null && EF.Functions.Like(b.Title, $"%{pattern.Title}%"))
+                    || (pattern.Author != null && EF.Functions.Like(b.Author, $"%{pattern.Author}%"))
+                    || (pattern.Genre != null && EF.Functions.Like(b.Genre, $"%{pattern.Genre}%")))
                 .ToListAsync();
         }
 

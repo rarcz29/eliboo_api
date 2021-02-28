@@ -35,6 +35,7 @@ namespace Eliboo.Infrastructure.Repositories
         {
             return await _db.Books
                 .Include(b => b.Users.Where(u => u.Id == userId))
+                .Include(b => b.Bookshelf)
                 .Where(b => b.Users.Where(u => u.Id == userId).ToList().Count > 0)
                 .ToListAsync();
         }

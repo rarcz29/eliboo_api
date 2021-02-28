@@ -15,7 +15,7 @@ namespace Eliboo.Infrastructure
             services.AddDbContext<AppDbContext>(options =>
             {
                 options
-                    .UseNpgsql(configuration.GetConnectionString("Develop"))
+                    .UseNpgsql(configuration.GetConnectionString("Default"))
                     .UseLoggerFactory(
                         LoggerFactory
                             .Create(builder => builder.AddConsole()

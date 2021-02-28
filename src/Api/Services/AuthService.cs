@@ -43,7 +43,7 @@ namespace Eliboo.Api.Services
                         new Claim(ClaimTypes.Name, user.Username),
                         new Claim(ClaimTypes.Email, user.Email)
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(30),
+                    Expires = DateTime.UtcNow.AddMinutes(60),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(tokenKey),
                         SecurityAlgorithms.HmacSha256Signature)

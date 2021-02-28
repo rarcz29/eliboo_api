@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Eliboo.Api</RootNamespace>
+    <UserSecretsId>f01f80b4-0d0e-4afb-823d-0ee506bb65a9</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.0.7" />
