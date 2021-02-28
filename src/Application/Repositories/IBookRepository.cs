@@ -10,7 +10,7 @@ namespace Eliboo.Application.Repositories
 
         Task<IEnumerable<Book>> FindBooksAsync(Book pattern, int libraryId);
 
-        Task<Book> GetReadingNow(int userId);
+        Task<Book> GetReadingNowAsync(int userId);
 
         Task AddToReadingNowAsync(int userId, int bookId);
 

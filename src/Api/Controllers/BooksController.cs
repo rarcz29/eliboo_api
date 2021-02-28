@@ -79,7 +79,7 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> GetCurrentBook()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var readingNow = await _unitOfWork.Books.GetReadingNow(userId);
+            var readingNow = await _unitOfWork.Books.GetReadingNowAsync(userId);
             var response = _mapper.Map<BookResponse>(readingNow);
             return Ok(response);
         }
@@ -88,9 +88,18 @@ namespace Eliboo.Api.Controllers
         public async Task<IActionResult> AddReadingNow([FromRoute] int id)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            await _unitOfWork.Books.AddToReadingNowAsync(userId, id);
-            var affected = await _unitOfWork.CommitAsync();
-            return affected < 0 ? Conflict() : Ok();
+
+            try
+            {
+                await _unitOfWork.Books.AddToReadingNowAsync(userId, id);
+                var affected = await _unitOfWork.CommitAsync();
+            }
+            catch
+            {
+                return Conflict();
+            }
+
+            return Ok();
         }
 
         [HttpDelete("current")]

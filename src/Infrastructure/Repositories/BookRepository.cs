@@ -48,12 +48,19 @@ namespace Eliboo.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Book> GetReadingNow(int userId)
+        public async Task<Book> GetReadingNowAsync(int userId)
         {
-            return await _db.Books
-                .Include(b => b.User)
-                .Where(b => b.User.Id == userId)
-                .FirstOrDefaultAsync();
+            try
+            {
+                return await _db.Books
+                    .Include(b => b.User)
+                    .Where(b => b.User.Id == userId)
+                    .FirstOrDefaultAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task RemoveReadingNowAsync(int userId)

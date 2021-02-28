@@ -32,12 +32,26 @@ namespace Eliboo.Infrastructure
 
         public int Commit()
         {
-            return _db.SaveChanges();
+            try
+            {
+                return _db.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<int> CommitAsync()
         {
-            return await _db.SaveChangesAsync();
+            try
+            {
+                return await _db.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public void Dispose()
